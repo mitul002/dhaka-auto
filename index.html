@@ -616,6 +616,7 @@ body.cb .daily .dl-i.ok .dl-bar i,body.cb .ach-row.done .bar i,body.cb #over .ac
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/><circle cx="12" cy="7.4" r="0.9" fill="currentColor"/></svg>
     </button>
     <button class="settings-fab ach-fab" id="achBtn" type="button" aria-label="Achievements">🏅</button>
+    <button class="settings-fab about-fab" id="mainAboutBtn" type="button" aria-label="About &amp; Privacy">ℹ️</button>
     <button class="settings-fab shop-fab" id="shopBtn" type="button" aria-label="Shop">🛒</button>
     <button class="settings-fab" id="openSettings" type="button" aria-label="Settings">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94a7.14 7.14 0 0 0 .06-.94 7.14 7.14 0 0 0-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.3 7.3 0 0 0-1.62-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.84a.5.5 0 0 0 .12.64l2.03 1.58a7.14 7.14 0 0 0-.06.94c0 .32.02.63.06.94L2.83 14.5a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.4.32.6.22l2.39-.96c.49.38 1.03.7 1.62.94l.36 2.54c.05.24.26.42.5.42h3.84c.24 0 .45-.18.5-.42l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.24.1.5 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2"/></svg>
@@ -660,6 +661,7 @@ body.cb .daily .dl-i.ok .dl-bar i,body.cb .ach-row.done .bar i,body.cb #over .ac
       <div class="settings-row" id="tapRow" style="margin-top:10px"><span class="s-label" data-i18n="a11yTap">👆 Tap to steer</span><button class="cta small" id="tapBtn" type="button">Off</button></div>
       <div class="settings-row" id="tiltRow" style="margin-top:10px"><span class="s-label" data-i18n="a11yTilt">📱 Tilt to steer</span><button class="cta small" id="tiltBtn" type="button">Off</button></div>
       <div class="settings-row" id="installRow" style="margin-top:10px;display:none"><span class="s-label" data-i18n="installLbl">📲 Install app</span><button class="cta small" id="installBtn" type="button" data-i18n="installBtn">Install</button></div>
+      <div class="settings-row" style="margin-top:10px"><span class="s-label" data-i18n="achTitle">🏅 Achievements</span><button class="cta small secondary" id="settingsAchBtn" type="button" data-i18n="aboutOpen">Open</button></div>
       <div class="settings-row" style="margin-top:10px"><span class="s-label" data-i18n="aboutLbl">ℹ️ About & Privacy</span><button class="cta small secondary" id="aboutBtn" type="button" data-i18n="aboutOpen">Open</button></div>
     </div>
 
@@ -3077,7 +3079,10 @@ $('tiltBtn').addEventListener('click', async (e) => {
 });
 if (!isTouch) { $('tapRow').style.display = 'none'; $('tiltRow').style.display = 'none'; }
 const aboutEl = $('about');
-$('aboutBtn').addEventListener('click', (e) => { e.stopPropagation(); $('aboutBody').textContent = T('aboutBody'); aboutEl.classList.remove('hidden'); });
+const openAboutModal = (e) => { if (e) e.stopPropagation(); $('aboutBody').textContent = T('aboutBody'); aboutEl.classList.remove('hidden'); };
+$('aboutBtn').addEventListener('click', openAboutModal);
+if ($('mainAboutBtn')) $('mainAboutBtn').addEventListener('click', openAboutModal);
+if ($('settingsAchBtn')) $('settingsAchBtn').addEventListener('click', (e) => { e.stopPropagation(); renderAch(); achEl.classList.remove('hidden'); });
 $('aboutClose').addEventListener('click', (e) => { e.stopPropagation(); aboutEl.classList.add('hidden'); });
 addEventListener('keydown', (e) => { if (aboutEl.classList.contains('hidden')) return; if (e.key === 'Escape') aboutEl.classList.add('hidden'); e.stopImmediatePropagation(); }, true);
 
