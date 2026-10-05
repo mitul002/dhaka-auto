@@ -12,9 +12,10 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Dhaka Auto">
+<!-- Open Graph / Twitter. -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://dhaka-auto.vercel.app/">
 <meta property="og:title" content="Dhaka Auto">
+<meta property="og:url" content="https://dhaka-auto.vercel.app/">
 <meta property="og:description" content="Drive an auto-rickshaw through Dhaka traffic. Pick up passengers, grab tea and dodge buses.">
 <meta property="og:image" content="https://dhaka-auto.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -474,6 +475,7 @@ body:not(.playing) #bestBar{opacity:0}
 #loader{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:radial-gradient(circle at 50% 40%,#2b1d4a,#0d0818);color:#ffd54f;transition:opacity .5s}
 #loader.gone{opacity:0;pointer-events:none}
 #loader .ld-logo{font-size:64px;animation:ldb 1s ease-in-out infinite alternate}
+#loader .title{margin:0 0 6px;text-align:center}
 #loader .ld-title{font:800 30px 'Baloo 2',sans-serif;letter-spacing:1px}
 #loader .ld-bar{width:180px;height:6px;border-radius:99px;background:rgba(255,255,255,.15);overflow:hidden}
 #loader .ld-bar i{display:block;height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,#26c6da,#ffd54f);transform:scaleX(0);transform-origin:left;will-change:transform;transition:transform .45s ease-out}
@@ -515,16 +517,21 @@ body.cb .pop.red{color:#fff;text-shadow:0 3px 0 #b85a00,0 0 18px rgba(255,150,30
 body.cb .lives svg:not(.lost){fill:#ffb000}
 body.cb .daily .dl-i.ok .dl-bar i,body.cb .ach-row.done .bar i,body.cb #over .act-row #boxBtn.opened{background:#4aa3ff}
 .about-body{white-space:pre-line;text-align:left;font:600 13px/1.45 'Inter',sans-serif;max-height:58vh;overflow:auto;margin:8px 0}
+.seg.wrap{flex-wrap:wrap;justify-content:flex-end}
+#about{z-index:60 !important}
+.about-dev{margin:6px 0 4px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.25);text-align:center;font:600 13px/1.5 'Inter',sans-serif;opacity:.9}
+.about-dev b{font-family:'Baloo 2',sans-serif;font-weight:800;color:#ffd54f;font-size:15px}
 </style>
 </head>
 <body>
-<div id="loader"><div class="ld-logo">🛺</div><div class="ld-title">Dhaka Auto</div><div class="ld-bar"><i id="ldFill"></i></div><div class="ld-msg" id="ldMsg">Loading…</div><button id="ldRetry" type="button" hidden>Retry</button></div>
+<div id="loader"><div class="ld-logo">🛺</div><div class="ld-brand"><h1 class="title"><span id="ldB1">Dhaka</span><span class="row2" id="ldB2">Auto</span></h1></div><div class="ld-bar"><i id="ldFill"></i></div><div class="ld-msg" id="ldMsg">Loading…</div><button id="ldRetry" type="button" hidden>Retry</button></div>
 <script>
 (function () {
   var bn = false; try { bn = (localStorage.getItem('par_lang') || 'en') === 'bn'; } catch (e) {}
   var TXT = bn ? { eng: 'গেম ইঞ্জিন লোড হচ্ছে…', font: 'ফন্ট লোড হচ্ছে…', build: 'শহর তৈরি হচ্ছে…', fail: 'গেম লোড হয়নি। ইন্টারনেট দেখে আবার চেষ্টা করো।', retry: 'আবার চেষ্টা করো' }
                 : { eng: 'Loading game engine…', font: 'Loading fonts…', build: 'Building the city…', fail: 'The game could not load. Check your connection and try again.', retry: 'Try again' };
   var fill = document.getElementById('ldFill'), msg = document.getElementById('ldMsg'), retry = document.getElementById('ldRetry');
+  if (bn) { document.getElementById('ldB1').textContent = 'ঢাকা'; document.getElementById('ldB2').textContent = 'অটো'; }
   retry.textContent = TXT.retry; retry.onclick = function () { location.reload(); };
   window.__ld = {
     T: TXT,
@@ -618,7 +625,7 @@ body.cb .daily .dl-i.ok .dl-bar i,body.cb .ach-row.done .bar i,body.cb #over .ac
 
 <section id="shop" class="overlay hidden" aria-label="Shop"><div class="over-card"><h2 data-i18n="shopTitle">🛒 Coin shop</h2><div class="final-lbl" id="shopBal"></div><div id="shopList"></div><div class="over-btns"><button class="cta" id="shopClose" type="button" data-i18n="shopClose">Close</button></div></div></section>
 <section id="ach" class="overlay hidden" aria-label="Achievements"><div class="over-card"><h2 data-i18n="achTitle">🏅 Achievements</h2><div id="achList"></div><div class="over-btns"><button class="cta" id="achClose" type="button" data-i18n="shopClose">Close</button></div></div></section>
-<section id="about" class="overlay hidden" aria-label="About"><div class="over-card"><h2 data-i18n="aboutTitle">ℹ️ About & Privacy</h2><div id="aboutBody" class="about-body"></div><div class="over-btns"><button class="cta" id="aboutClose" type="button" data-i18n="shopClose">Close</button></div></div></section>
+<section id="about" class="overlay hidden" aria-label="About"><div class="over-card"><h2 data-i18n="aboutTitle">ℹ️ About & Privacy</h2><div id="aboutBody" class="about-body"></div><div class="about-dev">Developed by <b>Cross Tech</b><br>by <b>Magnetieght EU</b></div><div class="over-btns"><button class="cta" id="aboutClose" type="button" data-i18n="shopClose">Close</button></div></div></section>
 <section id="settings" class="overlay hidden" aria-label="Settings">
   <div class="over-card settings-card">
     <h2 data-i18n="settingsTitle">⚙️ Settings</h2>
@@ -641,6 +648,7 @@ body.cb .daily .dl-i.ok .dl-bar i,body.cb .ach-row.done .bar i,body.cb #over .ac
       </div>
       <div class="settings-row vol-row"><span class="s-label" data-i18n="volMaster">🔊 Master</span><input type="range" min="0" max="100" id="volMaster"></div>
       <div class="settings-row vol-row"><span class="s-label" data-i18n="volMusic">🎵 Music</span><input type="range" min="0" max="100" id="volMusic"></div>
+      <div class="settings-row" style="margin-top:10px"><span class="s-label" data-i18n="bgmLbl">🎼 Music style</span><div class="seg wrap" id="bgmSeg"><button type="button" data-b="0" data-i18n="bgm0">Classic</button><button type="button" data-b="1" data-i18n="bgm1">Lo-fi</button><button type="button" data-b="2" data-i18n="bgm2">Folk</button><button type="button" data-b="3" data-i18n="bgm3">Night</button></div></div>
       <div class="settings-row vol-row"><span class="s-label" data-i18n="volEngine">🛞 Engine</span><input type="range" min="0" max="100" id="volEngine"></div>
       <div class="settings-row vol-row"><span class="s-label" data-i18n="volFx">🔔 Effects</span><input type="range" min="0" max="100" id="volFx"></div>
     </div>
@@ -784,7 +792,7 @@ const STRINGS = {
     targetReachedTitle: 'Target reached! \ud83c\udf89', targetReachedLine: (n) => 'You picked up ' + n + ' passengers. Brilliant!',
     newRecordTitle: 'What a ride!', overTitle: 'Oh no!', newRecordLine: 'New record. You own Dhaka\u2019s streets.',
     tipPopup: (n) => 'Tip +' + n + '!', chaiPopup: 'Tea!', fuelPopup: 'Fuel +45%', riderPopup: (n) => '+' + n + ' passenger!',
-    shopBtn: '🛒 Shop', shopTitle: '🛒 Coin shop', shopUp: 'Permanent upgrades', shopStock: 'Boosters (used automatically next run)', shopMax: 'MAX', shopLv: (l) => 'Lv ' + l + '/3', shopHave: (n) => 'Have ' + n, shopCos: '🎨 Paints & stickers: unlock them in Settings ⚙️', shopClose: 'Close', shopItems: { fuel: ['⛽ Fuel saver', 'Uses 10% less fuel per level'], magnet: ['🧲 Strong magnet', 'Magnet lasts +2s per level'], shield: ['🛡️ Tough shield', 'Shield lasts +2s per level'], nitro: ['⚡ Nitro charger', 'Close calls charge +5% more per level'], s_nitro: ['🚀 Nitro start', 'Next run starts with full nitro'], s_life: ['❤️ Spare life', '+1 life in the next run'] }, shareBtn: '📤 Share score', shareCopied: '✅ Score copied!', shareSaved: '✅ Image saved!', shareCta: 'Can you beat me?', shareText: (nm, sc, saw, km) => '🛺 Dhaka Auto · ' + nm + '\n🏆 ' + sc + ' pts · 🙋 ' + saw + ' passengers · 🛣 ' + km + ' km\nCan you beat me?', boxBtn: '🎁 Mystery box', boxOpen: (n) => '🎁 +' + n + ' 🪙', qualLbl: '🎞️ Graphics', qLow: 'Low', qMed: 'Medium', qHigh: 'High', volMusic: '🎵 Music', volEngine: '🛞 Engine', volFx: '🔔 Effects', tut1: '⬅️ ➡️  Swipe or use arrow keys to change lane', tut2: '☕ Grab tea and 🙋 passengers for points and coins', tut3: '⚡ Dodge at the last moment to charge Nitro', volMaster: '🔊 Master', backupLbl: '💾 Backup', expBtn: 'Export', impBtn: 'Import', expOk: '✅ Code copied', expManual: 'Copy this backup code:', impPrompt: 'Paste your backup code:', impBad: '⚠️ Invalid code', achTitle: '🏅 Achievements', achUnlocked: (n, r) => '🏅 ' + n + ' · +' + r + ' 🪙', giftMsg: '🎁 Welcome gift: +100 🪙', loginMsg: (d, r) => '📅 Day ' + d + ' login bonus: +' + r + ' 🪙', ach: { saw: ['🙋 Passenger King', 'Pick up 100 passengers'], cc: ['⚡ Daredevil', 'Make 50 close calls'], chai: ['☕ Chai Lover', 'Collect 200 teas'], km: ['🛣️ Long Hauler', 'Drive 25 km in total'], runs: ['🏁 Regular', 'Play 25 rides'], vip: ['⭐ VIP Driver', 'Pick up 10 VIP riders'] }, a11yFont: '🔠 Text size', a11yHc: '◐ High contrast', a11yCb: '🎨 Colour-blind palette', a11yTap: '👆 Tap to steer', a11yTilt: '📱 Tilt to steer', a11yOn: 'On', a11yOff: 'Off', aboutLbl: 'ℹ️ About & Privacy', aboutOpen: 'Open', aboutTitle: 'ℹ️ About & Privacy', aboutBody: 'Dhaka Auto is a street-driving game set in Dhaka. Drive your auto, pick up passengers, grab tea and dodge traffic.\n\nCredits\nGraphics: Three.js (MIT license). Fonts: Baloo 2 and Inter (SIL Open Font License). All music and sound effects are generated in your browser; no audio files are used.\n\nPrivacy\nNo account, no ads and no tracking inside the game. Your coins, upgrades, scores and settings are saved only on this device, in your browser storage. If you clear site data they are gone, so use Settings > Backup to keep a copy.\nThe game loads Three.js from cdnjs.cloudflare.com and fonts from Google Fonts, so those services can see your IP address and browser details, as with any website. Sharing a score uses your device share sheet or clipboard; the game uploads nothing.\n\nTap controls: tap the left or right third of the screen to change lane, the middle to jump. Tilt steering works in portrait mode.', installLbl: '📲 Install app', installBtn: 'Install', closeCall: (n) => '⚡ Close call! +' + n, nitroGo: '🔥 NITRO! Nothing can stop you', beatBest: '🏁 You passed your best!', vipAhead: '⭐ VIP rider ahead! Fare ×3', vipPopup: '⭐ VIP fare ×3!', missTitle: '🎯 Today\u2019s goals', dailyCount: (d, n) => d + '/' + n + ' done', dailyBonus: (b) => 'Finish all 3 for a +' + b + ' 🪙 bonus', dailyAll: '🎉 All goals done! See you tomorrow',  missDone: (r) => '✅ Mission done +' + r + ' 🪙', missAll: (b, st) => '🔥 All missions done! Streak ' + st + ' · +' + b + ' 🪙', mLbl_saw: (n) => 'Pick up ' + n + ' passengers', mLbl_cc: (n) => n + ' close calls', mLbl_chai: (n) => 'Collect ' + n + ' teas', mLbl_km: (n) => 'Drive ' + n + ' km', mLbl_vip: (n) => 'Pick up ' + n + ' VIP rider' + (n > 1 ? 's' : ''), fbNew: (d) => 'New best, +' + d + ' over your old one!', fbClose: (d) => 'So close! Only ' + d + ' short of your best', fbFar: (b) => 'Your best is ' + b + '. One more ride?', fbCC: (n) => n + ' close calls', nightPopup: '🔌 Load-shedding! Blackout · Score ×1.5', nightOver: '💡 Power is back', chainPopup: (n, sec) => '🔥 Chain ×' + n + ' · +' + sec + 's', tenSecPopup: '+10 seconds!', onTheWay: 'On the way', delivered: 'Delivered!',
+    shopBtn: '🛒 Shop', shopTitle: '🛒 Coin shop', shopUp: 'Permanent upgrades', shopStock: 'Boosters (used automatically next run)', shopMax: 'MAX', shopLv: (l) => 'Lv ' + l + '/3', shopHave: (n) => 'Have ' + n, shopCos: '🎨 Paints & stickers: unlock them in Settings ⚙️', shopClose: 'Close', shopItems: { fuel: ['⛽ Fuel saver', 'Uses 10% less fuel per level'], magnet: ['🧲 Strong magnet', 'Magnet lasts +2s per level'], shield: ['🛡️ Tough shield', 'Shield lasts +2s per level'], nitro: ['⚡ Nitro charger', 'Close calls charge +5% more per level'], s_nitro: ['🚀 Nitro start', 'Next run starts with full nitro'], s_life: ['❤️ Spare life', '+1 life in the next run'] }, shareBtn: '📤 Share score', shareCopied: '✅ Score copied!', shareSaved: '✅ Image saved!', shareCta: 'Can you beat me?', shareText: (nm, sc, saw, km) => '🛺 Dhaka Auto · ' + nm + '\n🏆 ' + sc + ' pts · 🙋 ' + saw + ' passengers · 🛣 ' + km + ' km\nCan you beat me?', boxBtn: '🎁 Mystery box', boxOpen: (n) => '🎁 +' + n + ' 🪙', qualLbl: '🎞️ Graphics', qLow: 'Low', qMed: 'Medium', qHigh: 'High', volMusic: '🎵 Music', volEngine: '🛞 Engine', volFx: '🔔 Effects', tut1: '⬅️ ➡️  Swipe or use arrow keys to change lane', tut2: '☕ Grab tea and 🙋 passengers for points and coins', tut3: '⚡ Dodge at the last moment to charge Nitro', volMaster: '🔊 Master', backupLbl: '💾 Backup', expBtn: 'Export', impBtn: 'Import', expOk: '✅ Code copied', expManual: 'Copy this backup code:', impPrompt: 'Paste your backup code:', impBad: '⚠️ Invalid code', achTitle: '🏅 Achievements', achUnlocked: (n, r) => '🏅 ' + n + ' · +' + r + ' 🪙', giftMsg: '🎁 Welcome gift: +100 🪙', loginMsg: (d, r) => '📅 Day ' + d + ' login bonus: +' + r + ' 🪙', ach: { saw: ['🙋 Passenger King', 'Pick up 100 passengers'], cc: ['⚡ Daredevil', 'Make 50 close calls'], chai: ['☕ Chai Lover', 'Collect 200 teas'], km: ['🛣️ Long Hauler', 'Drive 25 km in total'], runs: ['🏁 Regular', 'Play 25 rides'], vip: ['⭐ VIP Driver', 'Pick up 10 VIP riders'] }, a11yFont: '🔠 Text size', a11yHc: '◐ High contrast', a11yCb: '🎨 Colour-blind palette', a11yTap: '👆 Tap to steer', a11yTilt: '📱 Tilt to steer', a11yOn: 'On', a11yOff: 'Off', aboutLbl: 'ℹ️ About & Privacy', aboutOpen: 'Open', aboutTitle: 'ℹ️ About & Privacy', aboutBody: 'Dhaka Auto is a street-driving game set in Dhaka. Drive your auto, pick up passengers, grab tea and dodge traffic.\n\nCredits\nGraphics: Three.js (MIT license). Fonts: Baloo 2 and Inter (SIL Open Font License). All music and sound effects are generated in your browser; no audio files are used.\n\nPrivacy\nNo account, no ads and no tracking inside the game. Your coins, upgrades, scores and settings are saved only on this device, in your browser storage. If you clear site data they are gone, so use Settings > Backup to keep a copy.\nThe game loads Three.js from cdnjs.cloudflare.com and fonts from Google Fonts, so those services can see your IP address and browser details, as with any website. Sharing a score uses your device share sheet or clipboard; the game uploads nothing.\n\nTap controls: tap the left or right third of the screen to change lane, the middle to jump. Tilt steering works in portrait mode.', installLbl: '📲 Install app', installBtn: 'Install', bgmLbl: '🎼 Music style', bgm0: 'Classic', bgm1: 'Lo-fi', bgm2: 'Folk', bgm3: 'Night', closeCall: (n) => '⚡ Close call! +' + n, nitroGo: '🔥 NITRO! Nothing can stop you', beatBest: '🏁 You passed your best!', vipAhead: '⭐ VIP rider ahead! Fare ×3', vipPopup: '⭐ VIP fare ×3!', missTitle: '🎯 Today\u2019s goals', dailyCount: (d, n) => d + '/' + n + ' done', dailyBonus: (b) => 'Finish all 3 for a +' + b + ' 🪙 bonus', dailyAll: '🎉 All goals done! See you tomorrow',  missDone: (r) => '✅ Mission done +' + r + ' 🪙', missAll: (b, st) => '🔥 All missions done! Streak ' + st + ' · +' + b + ' 🪙', mLbl_saw: (n) => 'Pick up ' + n + ' passengers', mLbl_cc: (n) => n + ' close calls', mLbl_chai: (n) => 'Collect ' + n + ' teas', mLbl_km: (n) => 'Drive ' + n + ' km', mLbl_vip: (n) => 'Pick up ' + n + ' VIP rider' + (n > 1 ? 's' : ''), fbNew: (d) => 'New best, +' + d + ' over your old one!', fbClose: (d) => 'So close! Only ' + d + ' short of your best', fbFar: (b) => 'Your best is ' + b + '. One more ride?', fbCC: (n) => n + ' close calls', nightPopup: '🔌 Load-shedding! Blackout · Score ×1.5', nightOver: '💡 Power is back', chainPopup: (n, sec) => '🔥 Chain ×' + n + ' · +' + sec + 's', tenSecPopup: '+10 seconds!', onTheWay: 'On the way', delivered: 'Delivered!',
     hitTxt: { pothole: 'Thud!', cow: 'Moo!', barricade: 'Bang!', bike: 'Hey, watch out!', truck: 'Move aside!', taxi: 'Careful!', bus: 'Look out!' },
     hitFallback: 'Oof!', outOfFuel: 'Out of fuel! Find a fuel can within 5 seconds', fareLost: '-50 fare lost', beepBeep: 'Beep beep!', lowFuel: 'Low fuel! Refill the tank'
   },
@@ -822,7 +830,7 @@ const STRINGS = {
     targetReachedTitle: 'লক্ষ্য পূরণ! \ud83c\udf89', targetReachedLine: (n) => n + ' জন যাত্রী তুলে ফেলেছ। দুর্দান্ত!',
     newRecordTitle: 'কি খেলো!', overTitle: 'ওয়া ভাই!', newRecordLine: 'নতুন রেকর্ড। ঢাকার রাস্তায় তুমরাই রাজা।',
     tipPopup: (n) => 'টিপ +' + n + '!', chaiPopup: 'চা!', fuelPopup: 'ফুয়েল +৪৫%', riderPopup: (n) => '+' + n + ' যাত্রী!',
-    shopBtn: '🛒 দোকান', shopTitle: '🛒 কয়েন দোকান', shopUp: 'স্থায়ী আপগ্রেড', shopStock: 'বুস্টার (পরের রানে নিজে থেকে লাগবে)', shopMax: 'সর্বোচ্চ', shopLv: (l) => 'লেভেল ' + l + '/3', shopHave: (n) => 'আছে ' + n, shopCos: '🎨 রং ও স্টিকার: সেটিংসে গিয়ে কেনো ⚙️', shopClose: 'বন্ধ', shopItems: { fuel: ['⛽ তেল সাশ্রয়', 'প্রতি লেভেলে ১০% কম তেল'], magnet: ['🧲 জোরালো ম্যাগনেট', 'প্রতি লেভেলে +২ সে'], shield: ['🛡️ শক্ত শিল্ড', 'প্রতি লেভেলে +২ সে'], nitro: ['⚡ নাইট্রো চার্জার', 'কাছাকাছি পার হলে +৫% বেশি চার্জ'], s_nitro: ['🚀 নাইট্রো স্টার্ট', 'পরের রান ফুল নাইট্রো দিয়ে শুরু'], s_life: ['❤️ বাড়তি জীবন', 'পরের রানে +১ জীবন'] }, shareBtn: '📤 স্কোর শেয়ার', shareCopied: '✅ স্কোর কপি হয়েছে!', shareSaved: '✅ ছবি সেভ হয়েছে!', shareCta: 'আমাকে হারাতে পারবে?', shareText: (nm, sc, saw, km) => '🛺 ঢাকা অটো · ' + nm + '\n🏆 ' + sc + ' পয়েন্ট · 🙋 ' + saw + ' যাত্রী · 🛣 ' + km + ' কিমি\nআমাকে হারাতে পারবে?', boxBtn: '🎁 মিস্ট্রি বক্স', boxOpen: (n) => '🎁 +' + n + ' 🪙', qualLbl: '🎞️ গ্রাফিক্স', qLow: 'কম', qMed: 'মাঝারি', qHigh: 'বেশি', volMusic: '🎵 গান', volEngine: '🛞 ইঞ্জিন', volFx: '🔔 সাউন্ড ইফেক্ট', tut1: '⬅️ ➡️  লেন বদলাতে সোয়াইপ করো বা অ্যারো কী চাপো', tut2: '☕ চা আর 🙋 যাত্রী নাও, পয়েন্ট আর কয়েন পাবে', tut3: '⚡ শেষ মুহূর্তে সরে গেলে নাইট্রো ভরে', volMaster: '🔊 মাস্টার', backupLbl: '💾 ব্যাকআপ', expBtn: 'এক্সপোর্ট', impBtn: 'ইমপোর্ট', expOk: '✅ কোড কপি হয়েছে', expManual: 'এই ব্যাকআপ কোড কপি করো:', impPrompt: 'ব্যাকআপ কোড পেস্ট করো:', impBad: '⚠️ কোড ঠিক নেই', achTitle: '🏅 অর্জন', achUnlocked: (n, r) => '🏅 ' + n + ' · +' + r + ' 🪙', giftMsg: '🎁 স্বাগতম উপহার: +100 🪙', loginMsg: (d, r) => '📅 দিন ' + d + ' লগইন বোনাস: +' + r + ' 🪙', ach: { saw: ['🙋 যাত্রী সম্রাট', '১০০ জন যাত্রী নাও'], cc: ['⚡ দুঃসাহসী', '৫০ বার কাছাকাছি পার হও'], chai: ['☕ চা-প্রেমী', '২০০ কাপ চা নাও'], km: ['🛣️ লম্বা পথের চালক', 'মোট ২৫ কিমি চালাও'], runs: ['🏁 নিয়মিত', '২৫ বার খেলো'], vip: ['⭐ VIP চালক', '১০ জন VIP যাত্রী নাও'] }, a11yFont: '🔠 লেখার আকার', a11yHc: '◐ হাই কনট্রাস্ট', a11yCb: '🎨 বর্ণান্ধবান্ধব রং', a11yTap: '👆 ট্যাপ করে চালাও', a11yTilt: '📱 ফোন হেলিয়ে চালাও', a11yOn: 'চালু', a11yOff: 'বন্ধ', aboutLbl: 'ℹ️ পরিচিতি ও গোপনীয়তা', aboutOpen: 'খোলো', aboutTitle: 'ℹ️ পরিচিতি ও গোপনীয়তা', aboutBody: 'ঢাকা অটো ঢাকার রাস্তায় চালানোর একটি গেম। অটো চালাও, যাত্রী তোলো, চা নাও আর ট্রাফিক এড়াও।\n\nকৃতজ্ঞতা\nগ্রাফিক্স: Three.js (MIT লাইসেন্স)। ফন্ট: Baloo 2 ও Inter (SIL Open Font License)। সব গান ও সাউন্ড ইফেক্ট তোমার ব্রাউজারেই তৈরি হয়, কোনো অডিও ফাইল নেই।\n\nগোপনীয়তা\nগেমের ভেতরে কোনো অ্যাকাউন্ট, বিজ্ঞাপন বা ট্র্যাকিং নেই। তোমার কয়েন, আপগ্রেড, স্কোর ও সেটিংস শুধু এই ডিভাইসের ব্রাউজার স্টোরেজে জমা থাকে। সাইট ডেটা মুছলে এগুলো চলে যায়, তাই সেটিংসের ব্যাকআপ দিয়ে কপি রেখো।\nগেম cdnjs.cloudflare.com থেকে Three.js আর Google Fonts থেকে ফন্ট লোড করে, তাই যেকোনো ওয়েবসাইটের মতো ওই সেবাগুলো তোমার IP ঠিকানা ও ব্রাউজারের তথ্য দেখতে পারে। স্কোর শেয়ার করলে ডিভাইসের শেয়ার শিট বা ক্লিপবোর্ড ব্যবহার হয়, গেম নিজে কিছু আপলোড করে না।\n\nট্যাপ কন্ট্রোল: স্ক্রিনের বাঁ বা ডান তৃতীয়াংশে ট্যাপ করলে লেন বদলায়, মাঝখানে ট্যাপ করলে লাফ দেয়। ফোন হেলিয়ে চালানো পোর্ট্রেট মোডে কাজ করে।', installLbl: '📲 অ্যাপ ইনস্টল', installBtn: 'ইনস্টল', closeCall: (n) => '⚡ কাছাকাছি! +' + n, nitroGo: '🔥 নাইট্রো! এখন কেউ থামাতে পারবে না', beatBest: '🏁 সেরা স্কোর ছাড়িয়ে গেলে!', vipAhead: '⭐ সামনে VIP যাত্রী! ভাড়া ×৩', vipPopup: '⭐ VIP ভাড়া ×৩!', missTitle: '🎯 আজকের লক্ষ্য', dailyCount: (d, n) => d + '/' + n + ' শেষ', dailyBonus: (b) => 'তিনটাই শেষ করলে +' + b + ' 🪙 বোনাস', dailyAll: '🎉 আজকের সব লক্ষ্য শেষ! কাল আবার এসো',  missDone: (r) => '✅ মিশন শেষ +' + r + ' 🪙', missAll: (b, st) => '🔥 সব মিশন শেষ! স্ট্রিক ' + st + ' · +' + b + ' 🪙', mLbl_saw: (n) => n + ' জন যাত্রী নাও', mLbl_cc: (n) => n + ' বার কাছাকাছি পার হও', mLbl_chai: (n) => n + ' কাপ চা নাও', mLbl_km: (n) => n + ' কিমি চালাও', mLbl_vip: (n) => n + ' জন VIP যাত্রী নাও', fbNew: (d) => 'নতুন রেকর্ড, আগের চেয়ে +' + d + '!', fbClose: (d) => 'আর একটু! সেরা স্কোর থেকে মাত্র ' + d + ' কম', fbFar: (b) => 'তোমার সেরা ' + b + '। আরেকবার?', fbCC: (n) => n + ' বার কাছাকাছি', nightPopup: '🔌 লোডশেডিং! অন্ধকার · স্কোর ×১.৫', nightOver: '💡 কারেন্ট এসেছে', chainPopup: (n, sec) => '🔥 চেইন ×' + n + ' · +' + sec + 'সে', tenSecPopup: '+১০ সেকেন্ড!', onTheWay: 'পথে আছে', delivered: 'ডেলিভার হয়েছে!',
+    shopBtn: '🛒 দোকান', shopTitle: '🛒 কয়েন দোকান', shopUp: 'স্থায়ী আপগ্রেড', shopStock: 'বুস্টার (পরের রানে নিজে থেকে লাগবে)', shopMax: 'সর্বোচ্চ', shopLv: (l) => 'লেভেল ' + l + '/3', shopHave: (n) => 'আছে ' + n, shopCos: '🎨 রং ও স্টিকার: সেটিংসে গিয়ে কেনো ⚙️', shopClose: 'বন্ধ', shopItems: { fuel: ['⛽ তেল সাশ্রয়', 'প্রতি লেভেলে ১০% কম তেল'], magnet: ['🧲 জোরালো ম্যাগনেট', 'প্রতি লেভেলে +২ সে'], shield: ['🛡️ শক্ত শিল্ড', 'প্রতি লেভেলে +২ সে'], nitro: ['⚡ নাইট্রো চার্জার', 'কাছাকাছি পার হলে +৫% বেশি চার্জ'], s_nitro: ['🚀 নাইট্রো স্টার্ট', 'পরের রান ফুল নাইট্রো দিয়ে শুরু'], s_life: ['❤️ বাড়তি জীবন', 'পরের রানে +১ জীবন'] }, shareBtn: '📤 স্কোর শেয়ার', shareCopied: '✅ স্কোর কপি হয়েছে!', shareSaved: '✅ ছবি সেভ হয়েছে!', shareCta: 'আমাকে হারাতে পারবে?', shareText: (nm, sc, saw, km) => '🛺 ঢাকা অটো · ' + nm + '\n🏆 ' + sc + ' পয়েন্ট · 🙋 ' + saw + ' যাত্রী · 🛣 ' + km + ' কিমি\nআমাকে হারাতে পারবে?', boxBtn: '🎁 মিস্ট্রি বক্স', boxOpen: (n) => '🎁 +' + n + ' 🪙', qualLbl: '🎞️ গ্রাফিক্স', qLow: 'কম', qMed: 'মাঝারি', qHigh: 'বেশি', volMusic: '🎵 গান', volEngine: '🛞 ইঞ্জিন', volFx: '🔔 সাউন্ড ইফেক্ট', tut1: '⬅️ ➡️  লেন বদলাতে সোয়াইপ করো বা অ্যারো কী চাপো', tut2: '☕ চা আর 🙋 যাত্রী নাও, পয়েন্ট আর কয়েন পাবে', tut3: '⚡ শেষ মুহূর্তে সরে গেলে নাইট্রো ভরে', volMaster: '🔊 মাস্টার', backupLbl: '💾 ব্যাকআপ', expBtn: 'এক্সপোর্ট', impBtn: 'ইমপোর্ট', expOk: '✅ কোড কপি হয়েছে', expManual: 'এই ব্যাকআপ কোড কপি করো:', impPrompt: 'ব্যাকআপ কোড পেস্ট করো:', impBad: '⚠️ কোড ঠিক নেই', achTitle: '🏅 অর্জন', achUnlocked: (n, r) => '🏅 ' + n + ' · +' + r + ' 🪙', giftMsg: '🎁 স্বাগতম উপহার: +100 🪙', loginMsg: (d, r) => '📅 দিন ' + d + ' লগইন বোনাস: +' + r + ' 🪙', ach: { saw: ['🙋 যাত্রী সম্রাট', '১০০ জন যাত্রী নাও'], cc: ['⚡ দুঃসাহসী', '৫০ বার কাছাকাছি পার হও'], chai: ['☕ চা-প্রেমী', '২০০ কাপ চা নাও'], km: ['🛣️ লম্বা পথের চালক', 'মোট ২৫ কিমি চালাও'], runs: ['🏁 নিয়মিত', '২৫ বার খেলো'], vip: ['⭐ VIP চালক', '১০ জন VIP যাত্রী নাও'] }, a11yFont: '🔠 লেখার আকার', a11yHc: '◐ হাই কনট্রাস্ট', a11yCb: '🎨 বর্ণান্ধবান্ধব রং', a11yTap: '👆 ট্যাপ করে চালাও', a11yTilt: '📱 ফোন হেলিয়ে চালাও', a11yOn: 'চালু', a11yOff: 'বন্ধ', aboutLbl: 'ℹ️ পরিচিতি ও গোপনীয়তা', aboutOpen: 'খোলো', aboutTitle: 'ℹ️ পরিচিতি ও গোপনীয়তা', aboutBody: 'ঢাকা অটো ঢাকার রাস্তায় চালানোর একটি গেম। অটো চালাও, যাত্রী তোলো, চা নাও আর ট্রাফিক এড়াও।\n\nকৃতজ্ঞতা\nগ্রাফিক্স: Three.js (MIT লাইসেন্স)। ফন্ট: Baloo 2 ও Inter (SIL Open Font License)। সব গান ও সাউন্ড ইফেক্ট তোমার ব্রাউজারেই তৈরি হয়, কোনো অডিও ফাইল নেই।\n\nগোপনীয়তা\nগেমের ভেতরে কোনো অ্যাকাউন্ট, বিজ্ঞাপন বা ট্র্যাকিং নেই। তোমার কয়েন, আপগ্রেড, স্কোর ও সেটিংস শুধু এই ডিভাইসের ব্রাউজার স্টোরেজে জমা থাকে। সাইট ডেটা মুছলে এগুলো চলে যায়, তাই সেটিংসের ব্যাকআপ দিয়ে কপি রেখো।\nগেম cdnjs.cloudflare.com থেকে Three.js আর Google Fonts থেকে ফন্ট লোড করে, তাই যেকোনো ওয়েবসাইটের মতো ওই সেবাগুলো তোমার IP ঠিকানা ও ব্রাউজারের তথ্য দেখতে পারে। স্কোর শেয়ার করলে ডিভাইসের শেয়ার শিট বা ক্লিপবোর্ড ব্যবহার হয়, গেম নিজে কিছু আপলোড করে না।\n\nট্যাপ কন্ট্রোল: স্ক্রিনের বাঁ বা ডান তৃতীয়াংশে ট্যাপ করলে লেন বদলায়, মাঝখানে ট্যাপ করলে লাফ দেয়। ফোন হেলিয়ে চালানো পোর্ট্রেট মোডে কাজ করে।', installLbl: '📲 অ্যাপ ইনস্টল', installBtn: 'ইনস্টল', bgmLbl: '🎼 গানের ধরন', bgm0: 'ক্লাসিক', bgm1: 'লো-ফাই', bgm2: 'লোকগান', bgm3: 'নাইট', closeCall: (n) => '⚡ কাছাকাছি! +' + n, nitroGo: '🔥 নাইট্রো! এখন কেউ থামাতে পারবে না', beatBest: '🏁 সেরা স্কোর ছাড়িয়ে গেলে!', vipAhead: '⭐ সামনে VIP যাত্রী! ভাড়া ×৩', vipPopup: '⭐ VIP ভাড়া ×৩!', missTitle: '🎯 আজকের লক্ষ্য', dailyCount: (d, n) => d + '/' + n + ' শেষ', dailyBonus: (b) => 'তিনটাই শেষ করলে +' + b + ' 🪙 বোনাস', dailyAll: '🎉 আজকের সব লক্ষ্য শেষ! কাল আবার এসো',  missDone: (r) => '✅ মিশন শেষ +' + r + ' 🪙', missAll: (b, st) => '🔥 সব মিশন শেষ! স্ট্রিক ' + st + ' · +' + b + ' 🪙', mLbl_saw: (n) => n + ' জন যাত্রী নাও', mLbl_cc: (n) => n + ' বার কাছাকাছি পার হও', mLbl_chai: (n) => n + ' কাপ চা নাও', mLbl_km: (n) => n + ' কিমি চালাও', mLbl_vip: (n) => n + ' জন VIP যাত্রী নাও', fbNew: (d) => 'নতুন রেকর্ড, আগের চেয়ে +' + d + '!', fbClose: (d) => 'আর একটু! সেরা স্কোর থেকে মাত্র ' + d + ' কম', fbFar: (b) => 'তোমার সেরা ' + b + '। আরেকবার?', fbCC: (n) => n + ' বার কাছাকাছি', nightPopup: '🔌 লোডশেডিং! অন্ধকার · স্কোর ×১.৫', nightOver: '💡 কারেন্ট এসেছে', chainPopup: (n, sec) => '🔥 চেইন ×' + n + ' · +' + sec + 'সে', tenSecPopup: '+১০ সেকেন্ড!', onTheWay: 'পথে আছে', delivered: 'ডেলিভার হয়েছে!',
     hitTxt: { pothole: 'ধাড়াম!', cow: 'ম্যাঁ!', barricade: 'ঠাক!', bike: 'আরে ভাই!', truck: 'সাইড দ্যান!', taxi: 'এই মিয়া!', bus: 'হুশিয়ার!' },
     hitFallback: 'আয় রে!', outOfFuel: 'ফুয়েল শেষ! ৫ সেকেন্ডের মধ্যে ফুয়েল ক্যান নাও', fareLost: '-50 ভাড়া খসে', beepBeep: 'পিপ-পিপ!', lowFuel: 'ফুয়েল কম! ট্যাংক ভরুন'
   }
@@ -2415,11 +2423,16 @@ const BGM_EIGHTH = 0.3; // 100 bpm
 function bgmInit() {
   const c = AS.ctx; if (!c || BGM.bus) return;
   const bus = c.createGain(); bus.gain.value = 0; bus.connect(AS.master); BGM.bus = bus;
-  // tanpura-like drone: D + A, slow breathing
-  const dg = c.createGain(); dg.gain.value = 0.07; const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 500;
-  dg.connect(lp); lp.connect(bus);
-  [73.42, 110, 146.83].forEach((f, i) => { const o = c.createOscillator(); o.type = i === 2 ? 'sine' : 'triangle'; o.frequency.value = f; o.detune.value = i * 3; o.connect(dg); o.start(); });
-  const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = 0.18; lg.gain.value = 0.03; l.connect(lg); lg.connect(dg.gain); l.start();
+  bgmBuildDrone();
+}
+function bgmBuildDrone() {
+  const c = AS.ctx, T = BGM_TRACKS[bgmTrack];
+  if (BGM.drone) BGM.drone.forEach((n) => { try { if (n.stop) n.stop(); n.disconnect(); } catch (e) {} });
+  const nodes = [], dg = c.createGain(), lp = c.createBiquadFilter();
+  dg.gain.value = T.dg; lp.type = 'lowpass'; lp.frequency.value = T.lp; dg.connect(lp); lp.connect(BGM.bus); nodes.push(dg, lp);
+  T.drone.forEach(([f, ty], i) => { const o = c.createOscillator(); o.type = ty; o.frequency.value = f; o.detune.value = i * 3; o.connect(dg); o.start(); nodes.push(o); });
+  const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = 0.18; lg.gain.value = T.dg * 0.43; l.connect(lg); lg.connect(dg.gain); l.start(); nodes.push(l, lg);
+  BGM.drone = nodes;
 }
 function bgmNoise(t0, dur, vol, ft, freq) {
   const c = AS.ctx, s = c.createBufferSource(); s.buffer = AS.noise;
@@ -2437,6 +2450,49 @@ function bgmStep(i, t) {
   if (e === 6) { tone(200, 'sine', t, 0.14, 0.28, 120, B); tone(760, 'sine', t, 0.07, 0.11, 560, B); } // dhi
   bgmNoise(t, 0.04, e % 2 ? 0.03 : 0.05, 'highpass', 6000);                                           // shaker
 }
+
+function bgmLofi(i, t) {
+  const e = i % 8, bar = (i >> 3) & 3, B = BGM.bus, m = [4, null, 3, null, 2, null, 3, null, 5, null, 4, null, 3, null, null, null, 2, null, 3, null, 4, null, 5, null, 4, null, 3, null, 2, null, null, null][i];
+  const N = [220, 261.63, 293.66, 329.63, 392, 440, 523.25, 587.33], root = [110, 87.31, 130.81, 98][bar];
+  if (m != null) { tone(N[m], 'sine', t, 1.0, 0.16, null, B); tone(N[m] * 2, 'sine', t, 0.5, 0.04, null, B); }
+  if (e === 0) tone(root, 'sine', t, 1.2, 0.24, null, B);
+  if (e === 4) tone(root * 1.5, 'sine', t, 0.8, 0.12, null, B);
+  if (e === 0 || e === 5) tone(120, 'sine', t, 0.25, 0.42, 50, B);
+  if (e === 2 || e === 6) bgmNoise(t, 0.12, 0.08, 'bandpass', 1800);
+  bgmNoise(t, 0.03, 0.025, 'highpass', 7000);
+}
+function bgmFolk(i, t) {
+  const e = i % 8, B = BGM.bus, m = [0, null, 1, 2, 3, null, 2, 1, 0, null, 1, 2, 4, null, 3, 2, 1, 2, 3, 4, 5, null, 4, 3, 2, 3, 2, 1, 0, null, 0, null][i];
+  const N = [293.66, 329.63, 369.99, 440, 493.88, 587.33, 659.25, 739.99];
+  if (m != null) { tone(N[m], 'triangle', t, 0.35, 0.22, null, B); tone(N[m] * 2, 'sine', t, 0.2, 0.08, null, B); }
+  if (e === 0 || e === 4) tone(293.66, 'sawtooth', t, 0.15, 0.04, 290, B);
+  if (e === 0) tone(110, 'sine', t, 0.28, 0.5, 60, B);
+  if (e === 3) tone(180, 'sine', t, 0.12, 0.3, 100, B);
+  if (e === 6) bgmNoise(t, 0.05, 0.12, 'bandpass', 1200);
+  bgmNoise(t, 0.03, e % 2 ? 0.02 : 0.035, 'highpass', 6500);
+}
+function bgmNight(i, t) {
+  const e = i % 8, bar = (i >> 3) & 3, B = BGM.bus;
+  const root = [82.41, 82.41, 65.41, 73.42][bar], ch = [[329.63, 392, 493.88, 659.25], [329.63, 392, 493.88, 659.25], [261.63, 329.63, 392, 523.25], [293.66, 369.99, 440, 587.33]][bar];
+  if (e % 2 === 0) tone(root, 'triangle', t, 0.22, 0.26, null, B);
+  tone(ch[e % 4], 'triangle', t, 0.18, 0.12, null, B); tone(ch[e % 4] * 2, 'sine', t, 0.1, 0.04, null, B);
+  if (e === 0 || e === 4) tone(120, 'sine', t, 0.2, 0.5, 45, B);
+  if (e === 2 || e === 6) bgmNoise(t, 0.1, 0.1, 'bandpass', 2000);
+  bgmNoise(t, e === 7 ? 0.08 : 0.03, 0.04, 'highpass', 7000);
+}
+const BGM_TRACKS = [
+  { eighth: BGM_EIGHTH, drone: [[73.42, 'triangle'], [110, 'triangle'], [146.83, 'sine']], dg: 0.07, lp: 500, step: bgmStep },
+  { eighth: 0.4, drone: [[110, 'sine'], [164.81, 'sine']], dg: 0.05, lp: 400, step: bgmLofi },
+  { eighth: 0.26, drone: [[73.42, 'triangle'], [146.83, 'triangle']], dg: 0.06, lp: 450, step: bgmFolk },
+  { eighth: 0.25, drone: [[82.41, 'sine'], [123.47, 'sine']], dg: 0.05, lp: 350, step: bgmNight }
+];
+let bgmTrack = 0;
+try { bgmTrack = Math.max(0, Math.min(3, parseInt(localStorage.getItem('par_bgm'), 10) || 0)); } catch (e) {}
+function setBgmTrack(n) {
+  bgmTrack = Math.max(0, Math.min(3, n)); try { localStorage.setItem('par_bgm', String(bgmTrack)); } catch (e) {}
+  document.querySelectorAll('#bgmSeg button').forEach((b) => b.classList.toggle('active', +b.dataset.b === bgmTrack));
+  if (BGM.bus) { bgmBuildDrone(); BGM.on = false; }
+}
 let bgmTick = 0;
 function bgmUpdate(dt) {
   if (!AS.ctx || !AS.master) return;
@@ -2448,7 +2504,8 @@ function bgmUpdate(dt) {
   if (!want) { BGM.on = false; return; }
   if (!BGM.on) { BGM.on = true; BGM.step = 0; BGM.next = c.currentTime + 0.1; }
   if (BGM.next < c.currentTime) BGM.next = c.currentTime + 0.05;
-  while (BGM.next < c.currentTime + 0.5) { bgmStep(BGM.step, BGM.next); BGM.next += BGM_EIGHTH; BGM.step = (BGM.step + 1) % BGM_MEL.length; }
+  const tr = BGM_TRACKS[bgmTrack];
+  while (BGM.next < c.currentTime + 0.5) { tr.step(BGM.step, BGM.next); BGM.next += tr.eighth; BGM.step = (BGM.step + 1) % 32; }
 }
 // browsers only allow sound after a user gesture: unlock audio on the first tap / key on the home screen
 ['pointerdown', 'keydown', 'touchstart'].forEach((ev) => addEventListener(ev, () => audioInit(), { passive: true }));
@@ -2930,6 +2987,7 @@ function applyQuality(q) {
   document.querySelectorAll('#qualSeg button').forEach((b) => b.classList.toggle('active', b.dataset.q === q));
 }
 document.querySelectorAll('#qualSeg button').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); applyQuality(b.dataset.q); }));
+document.querySelectorAll('#bgmSeg button').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); setBgmTrack(+b.dataset.b); }));
 function saveVol() { try { localStorage.setItem('par_vol', JSON.stringify(vol)); } catch (e) {} }
 function initVolUI() {
   for (const [id, k] of [['volMaster', 'master'], ['volMusic', 'music'], ['volEngine', 'eng'], ['volFx', 'fx']]) {
@@ -3815,7 +3873,7 @@ function frame(now) {
   renderer.render(scene, camera);
 }
 requestAnimationFrame(frame);
-for (const fn of [() => applyQuality(quality), initVolUI, applyA11y]) { try { fn(); } catch (e) { console.error('init step failed', e); } }
+for (const fn of [() => applyQuality(quality), initVolUI, applyA11y, () => setBgmTrack(bgmTrack)]) { try { fn(); } catch (e) { console.error('init step failed', e); } }
 ready = true; window.__daReady = true;
 setTimeout(() => { const l = document.getElementById('loader'); if (l) { l.classList.add('gone'); setTimeout(() => l.remove(), 600); } setTimeout(() => { const m = dailyLogin(); if (m) showHint(m, 4200); }, 900); }, 700);
 // Start button removed - game starts directly on selection
